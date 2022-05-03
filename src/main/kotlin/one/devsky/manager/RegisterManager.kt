@@ -1,4 +1,4 @@
-package one.devsky.boilerplates.manager
+package one.devsky.manager
 
 import de.moltenKt.core.extension.logging.getLogger
 import net.dv8tion.jda.api.JDA
@@ -6,9 +6,9 @@ import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.hooks.EventListener
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.build.Commands
-import one.devsky.boilerplates.annotations.SlashCommand
-import one.devsky.boilerplates.interfaces.HasSubcommandGroups
-import one.devsky.boilerplates.interfaces.HasOptions
+import one.devsky.annotations.SlashCommand
+import one.devsky.interfaces.HasSubcommandGroups
+import one.devsky.interfaces.HasOptions
 import org.reflections8.Reflections
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -19,7 +19,7 @@ object RegisterManager {
 
     @OptIn(ExperimentalTime::class)
     fun JDABuilder.registerAll() : JDABuilder {
-        val reflections = Reflections("one.devsky.boilerplates")
+        val reflections = Reflections("one.devsky")
 
         // Registering both ListenerAdapters and EventListeners
         val listenerTime = measureTime {
@@ -42,7 +42,7 @@ object RegisterManager {
 
     @OptIn(ExperimentalTime::class)
     fun JDA.registerCommands(): JDA {
-        val reflections = Reflections("one.devsky.boilerplates")
+        val reflections = Reflections("one.devsky")
 
         // Registering commands
         val commandsTime = measureTime {

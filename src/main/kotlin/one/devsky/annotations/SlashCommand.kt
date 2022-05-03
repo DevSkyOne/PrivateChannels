@@ -1,4 +1,4 @@
-package one.devsky.boilerplates.annotations
+package one.devsky.annotations
 
 annotation class SlashCommand(
     val name: String,

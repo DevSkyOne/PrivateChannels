@@ -1,15 +1,15 @@
-package one.devsky.boilerplates
+package one.devsky
 
 import de.moltenKt.core.extension.logging.getLogger
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
-import one.devsky.boilerplates.manager.RegisterManager.registerAll
-import one.devsky.boilerplates.manager.RegisterManager.registerCommands
+import one.devsky.manager.RegisterManager.registerAll
+import one.devsky.manager.RegisterManager.registerCommands
 
-class JDA5Boilerplate {
+class PrivateChannels {
 
     companion object {
-        lateinit var instance: JDA5Boilerplate
+        lateinit var instance: PrivateChannels
     }
 
     private val jda: JDA
@@ -23,7 +23,7 @@ class JDA5Boilerplate {
             .awaitReady()
             .registerCommands()
 
-        getLogger(JDA5Boilerplate::class).info("Bot is ready! ${jda.selfUser.name} - ${jda.selfUser.id} on ${jda.guilds.size} guilds")
+        getLogger(PrivateChannels::class).info("Bot is ready! ${jda.selfUser.name} - ${jda.selfUser.id} on ${jda.guilds.size} guilds")
     }
 
 }

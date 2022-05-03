@@ -4,10 +4,10 @@
     <img src="https://cdn.discordapp.com/attachments/899676897120763914/930500237347401818/DevSkyTM_12.png" alt="Logo" width="200" height="200">
   </a>
 
-  <h3 align="center">DevSky JDA 5 Discord Bot Boilerplate</h3>
+  <h3 align="center">DevSky Private Channels</h3>
 
   <p align="center">
-    This is a template for a new discord bot based on MoltenKT and JDA 5
+    TOS / Partnerkonforme Private Voice Channels
     <br />
     <a href="https://discord.com/users/216487432667791360"><strong>Contact »</strong></a>
     <br />

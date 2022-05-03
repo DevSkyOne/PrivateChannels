@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.20"
 }
 
-group = "one.devsky.boilerplates"
+group = "one.devsky"
 version = "1.0-SNAPSHOT"
 var moltenVersion = "1.0-PRE-9.4"
 

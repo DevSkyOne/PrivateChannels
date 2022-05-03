@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0da52e26-868c-45ff-90f8-1eb6e9462c2b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/interfaces/HasOptions.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/interfaces/HasSubcommandGroups.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/listeners/PrivateChannels.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/listeners/ModalTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/listeners/ModalTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/manager/RegisterManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/manager/RegisterManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/JDA5Boilerplate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/PrivateChannels.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/Start.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/Start.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/annotations/SlashCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/annotations/SlashCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/interfaces/HasOptions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/interfaces/HasOptions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/interfaces/HasSubcommandGroups.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/interfaces/HasSubcommandGroups.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/listeners/ModalTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/boilerplates/manager/RegisterManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/manager/RegisterManager.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +61,7 @@
 }</component>
   <component name="RunManager">
     <configuration name="StartKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="one.devsky.boilerplates.StartKt" />
+      <option name="MAIN_CLASS_NAME" value="one.devsky.StartKt" />
       <module name="JDA5BoilerplateKotlin.main" />
       <shortenClasspath name="NONE" />
       <method v="2">
