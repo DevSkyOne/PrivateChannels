@@ -6,7 +6,7 @@ plugins {
 
 group = "one.devsky"
 version = "1.0-SNAPSHOT"
-var moltenVersion = "1.0-PRE-9.4"
+var moltenVersion = "1.0-PRE-13.1"
 
 repositories {
     mavenCentral()
@@ -17,11 +17,11 @@ dependencies {
     testImplementation(kotlin("test"))
 
     // Kotlin Base Dependencies
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 
     // Discord API
-    implementation("net.dv8tion:JDA:5.0.0-alpha.11")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.12")
 
     // Reflection Dependencies for automatic registration of commands and listeners
     implementation("net.oneandone.reflections8:reflections8:0.11.7")
