@@ -10,15 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0da52e26-868c-45ff-90f8-1eb6e9462c2b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/extensions/Extensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/interfaces/HasSubcommands.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/listeners/EditPrivateChannelCommand.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/PrivateChannels.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/PrivateChannels.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/listeners/PrivateChannels.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/listeners/PrivateChannelsListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/one/devsky/manager/RegisterManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/one/devsky/manager/RegisterManager.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,10 +30,10 @@
       <list>
         <option value="Kotlin Object" />
         <option value="Kotlin Annotation" />
-        <option value="Kotlin Class" />
         <option value="package-info" />
         <option value="Kotlin Interface" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -58,7 +53,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Project.color": "143636",
+    "Project.color": "0d1320",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -67,6 +62,11 @@
     "project.structure.side.proportion": "0.16696481"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="one.devsky.interfaces" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="StartKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="one.devsky.StartKt" />

@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands
 import one.devsky.annotations.SlashCommand
 import one.devsky.interfaces.HasSubcommandGroups
 import one.devsky.interfaces.HasOptions
+import one.devsky.interfaces.HasSubcommands
 import org.reflections8.Reflections
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -63,6 +64,10 @@ object RegisterManager {
 
                 if (command is HasOptions) {
                     data.addOptions(command.getOptions())
+                }
+
+                if (command is HasSubcommands) {
+                    data.addSubcommands(command.getSubCommands())
                 }
 
                 if (command is HasSubcommandGroups) {
