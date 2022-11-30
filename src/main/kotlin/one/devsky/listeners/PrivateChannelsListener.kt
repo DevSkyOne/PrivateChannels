@@ -79,6 +79,7 @@ class PrivateChannelsListener : ListenerAdapter(), HasOptions {
 
         category.createVoiceChannel("${icons.random().apply { println("Char is: $this") }}-Talk $talkId")
             .addMemberPermissionOverride(member.idLong, Permission.PRIORITY_SPEAKER.rawValue, 0L)
+            .addMemberPermissionOverride(member.idLong, Permission.MANAGE_CHANNEL.rawValue, 0L)
             .queue { voice ->
                 PrivateChannels.instance.properties.addToList("channels", voice.id)
                 guild.moveVoiceMember(member, voice).queue()
