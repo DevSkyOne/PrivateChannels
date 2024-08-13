@@ -29,6 +29,6 @@ class PrivateChannels {
             .awaitReady()
             .registerCommands()
 
-        getLogger().info("Bot is ready! ${jda.selfUser.name} - ${jda.selfUser.id} on ${jda.guilds.size} guilds")
+        getLogger().info("Bot online. ${jda.selfUser.name} - ${jda.selfUser.id} on ${jda.guilds.size} guilds")
     }
 }

@@ -90,12 +90,29 @@ class PrivateChannelsListener : ListenerAdapter(), HasOptions {
         val talkId = TempStorage.readTempFileAsStringOrNull("talkId")?.toIntOrNull() ?: 0
         TempStorage.saveTempFile("talkId", (talkId + 1).toString())
 
+        if (!guild.selfMember.canSync(category)) {
+            member.user.openPrivateChannel().queue { it.sendMessage("Es ist ein Fehler beim Erstellen eines privaten Channels aufgetreten. `Fehlende Berechtigungen`").queue() }
+            return
+        }
+
         category.createVoiceChannel("${Environment.icons.random()}-Talk $talkId")
             .addMemberPermissionOverride(member.idLong, Permission.PRIORITY_SPEAKER.rawValue, 0L)
-            .queue { voice ->
-                TempStorage.addToList("tempchannels", voice.id)
-                guild.moveVoiceMember(member, voice).queue()
-            }
+            .queue (
+                { voice ->
+                    TempStorage.addToList("tempchannels", voice.id)
+                    guild.moveVoiceMember(member, voice).queue()
+                },
+                { sendErrorMessageToUser(member, it) }
+            )
     }
 
+
+    private fun sendErrorMessageToUser(member: Member, throwable: Throwable) {
+        getLogger().error("Fehler beim Erstellen eines privaten Channels", throwable)
+        member.user.openPrivateChannel().queue { it.sendMessage("Es ist ein Fehler beim Erstellen eines privaten Channels aufgetreten.\n \n " +
+                "```kt \n" +
+                throwable.message +
+                "\n ```").queue() }
+
+    }
 }
