@@ -19,3 +19,10 @@
     <a href="https://github.com/TheFruxz/MoltenKT">MoltenKT Framework</a>
   </p>
 </div>
+
+
+
+### Installation
+
+1. Copy the `.env.example` file to `.env` and fill in the required fields.
+2. Start the jar inside the same directory as the `.env` file.

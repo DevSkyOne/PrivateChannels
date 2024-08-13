@@ -1,27 +1,20 @@
 package one.devsky.listeners
 
-import de.moltenKt.core.extension.logging.getItsLogger
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.AudioChannel
-import net.dv8tion.jda.api.entities.ChannelType
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
-import net.dv8tion.jda.api.entities.VoiceChannel
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent
+import net.dv8tion.jda.api.entities.channel.ChannelType
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
-import one.devsky.PrivateChannels
 import one.devsky.annotations.SlashCommand
-import one.devsky.extensions.addToList
-import one.devsky.extensions.getList
-import one.devsky.extensions.removeFromList
-import one.devsky.extensions.set
+import one.devsky.extensions.getLogger
 import one.devsky.interfaces.HasOptions
-import java.util.logging.Level
+import one.devsky.manager.Environment
+import one.devsky.manager.TempStorage
 
 
 @SlashCommand("setupprivatechannels", "Erstelle temporäre Audiochannel", true)
@@ -29,58 +22,78 @@ class PrivateChannelsListener : ListenerAdapter(), HasOptions {
 
     override fun getOptions(): List<OptionData> {
         return listOf(
-            OptionData(OptionType.CHANNEL, "channel", "Wähle einen Voicechannel", true).setChannelTypes(ChannelType.VOICE)
+            OptionData(
+                OptionType.CHANNEL,
+                "channel",
+                "Wähle einen Voicechannel",
+                true
+            ).setChannelTypes(ChannelType.VOICE),
+            OptionData(
+                OptionType.CHANNEL,
+                "category",
+                "Wähle eine Kategorie (optional)",
+                false
+            ).setChannelTypes(ChannelType.CATEGORY)
         )
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) = with(event) {
-        if(name != "setupprivatechannels") return@with
+        if (name != "setupprivatechannels") return@with
+        if (guild == null) return@with
 
-        val audioChannel = getOption("channel")?.asAudioChannel ?: return@with reply("Kein Voicechannel gewählt").setEphemeral(true).queue()
-        PrivateChannels.instance.properties.set("joinChannel", audioChannel.id)
-        reply("Der JoinKanal für die temporären Audiochannels wurde auf ${audioChannel.asMention} gesetzt.").setEphemeral(true).queue()
+        val audioChannel =
+            getOption("channel")?.asChannel ?: return@with reply("Kein Channel gewählt").setEphemeral(true).queue()
+        if (audioChannel !is AudioChannel) return@with reply("Der gewählte Channel ist kein Voicechannel").setEphemeral(
+            true
+        ).queue()
+
+        val category = getOption("category")?.asChannel ?: audioChannel.asAudioChannel().parentCategory
+
+        TempStorage.saveTempFile("tempchannels.${guild!!.id}.channel", (audioChannel as AudioChannel).id)
+        category?.id?.let { TempStorage.saveTempFile("tempchannels.${guild!!.id}.category", it) }
+        reply("Der JoinKanal für die temporären Audiochannels wurde auf ${(audioChannel as AudioChannel).asMention} gesetzt.").setEphemeral(
+            true
+        ).queue()
     }
 
-    private val icons = setOf("\uD83D\uDFE0", "\uD83D\uDFE1", "\uD83D\uDFE2", "\uD83D\uDFE3", "\uD83D\uDFE4", "\uD83D\uDFE5", "\uD83D\uDFE7", "\uD83D\uDFE8",
-    "\uD83D\uDFE9", "\uD83D\uDFE6", "\uD83D\uDFEA", "\uD83D\uDFEB")
+    override fun onGuildVoiceUpdate(event: GuildVoiceUpdateEvent) = with(event) {
+        val joinChannel = channelJoined
+        val leaveChannel = channelLeft
 
-    override fun onGuildVoiceJoin(event: GuildVoiceJoinEvent) = with(event) {
-        onJoinChannel(guild, channelJoined, member)
-    }
+        if (joinChannel == null && leaveChannel == null) return@with
+        if (joinChannel != null && leaveChannel != null) run {
+            onLeaveChannel(leaveChannel)
+            onJoinChannel(guild, joinChannel, member)
+            return@with
+        }
+        if (joinChannel != null) return@with onJoinChannel(guild, joinChannel, member)
+        if (leaveChannel != null) return@with onLeaveChannel(leaveChannel)
 
-    override fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) = with(event) {
-        onLeaveChannel(channelLeft)
-    }
-
-    override fun onGuildVoiceMove(event: GuildVoiceMoveEvent) = with(event) {
-        onLeaveChannel(channelLeft)
-        onJoinChannel(guild, channelJoined, member)
     }
 
     private fun onLeaveChannel(channelLeft: AudioChannel) {
-        if (!PrivateChannels.instance.properties.getList("channels").contains(channelLeft.id)) return
+        if (!TempStorage.getList("tempchannels").contains(channelLeft.id)) return
 
-        if(channelLeft.members.size == 0) {
-            channelLeft.delete().queue()
-            PrivateChannels.instance.properties.removeFromList("channels", channelLeft.id)
-        } else {
-            println("${channelLeft.members.size} members left in ${channelLeft.name}")
-        }
+        if (channelLeft.members.isNotEmpty()) return
+
+        channelLeft.delete().queue()
+        TempStorage.removeFromList("tempchannels", channelLeft.id)
     }
 
     private fun onJoinChannel(guild: Guild, channelJoined: AudioChannel, member: Member) {
-        if(PrivateChannels.instance.properties["joinChannel"] != channelJoined.id) return
+        if (TempStorage.readTempFileAsString("tempchannels.${guild.id}.channel") != channelJoined.id) return
 
-        val category = PrivateChannels.instance.properties["category"]?.toString()?.let { guild.getCategoryById(it) } ?: guild.categories.find { it.voiceChannels.contains(channelJoined) } ?: return getItsLogger().log(
-            Level.WARNING, "Es wurde keine passende Kategorie für einen Voicechannel gefunden")
+        val category = TempStorage.readTempFileAsStringOrNull("tempchannels.${guild.id}.category")?.let { guild.getCategoryById(it) }
+            ?: guild.categories.find { it.voiceChannels.contains(channelJoined) }
+            ?: return getLogger().warn("Es wurde keine passende Kategorie für einen Voicechannel gefunden")
 
-        val talkId = PrivateChannels.instance.properties.getProperty("talkId", "1").toInt()
-        PrivateChannels.instance.properties.set("talkId", (talkId + 1).toString())
+        val talkId = TempStorage.readTempFileAsStringOrNull("talkId")?.toIntOrNull() ?: 0
+        TempStorage.saveTempFile("talkId", (talkId + 1).toString())
 
-        category.createVoiceChannel("${icons.random().apply { println("Char is: $this") }}-Talk $talkId")
+        category.createVoiceChannel("${Environment.icons.random()}-Talk $talkId")
             .addMemberPermissionOverride(member.idLong, Permission.PRIORITY_SPEAKER.rawValue, 0L)
             .queue { voice ->
-                PrivateChannels.instance.properties.addToList("channels", voice.id)
+                TempStorage.addToList("tempchannels", voice.id)
                 guild.moveVoiceMember(member, voice).queue()
             }
     }
